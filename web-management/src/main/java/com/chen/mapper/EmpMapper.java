@@ -1,10 +1,9 @@
 package com.chen.mapper;
 
 import com.chen.pojo.Emp;
+import com.chen.pojo.EmpQueryParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -21,5 +20,5 @@ public interface EmpMapper {
     /**
      * 查询一页员工信息和部门名称
      */
-    public List<Emp> list(String name, Integer gender, LocalDate begin, LocalDate end);
+    public List<Emp> list(EmpQueryParam empQueryParam);
 }
