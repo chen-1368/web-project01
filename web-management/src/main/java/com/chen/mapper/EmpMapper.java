@@ -2,10 +2,8 @@ package com.chen.mapper;
 
 import com.chen.pojo.Emp;
 import com.chen.pojo.EmpQueryParam;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.MapKey;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.*;
+
 import java.util.List;
 import java.util.Map;
 
@@ -53,4 +51,10 @@ public interface EmpMapper {
      */
     @MapKey("name")
     List<Map<String, Object>> getEmpGenderData();
+
+    /**
+     * 查询所以员工
+     */
+    @Select("select * from emp")
+    List<Emp> getAllEmp();
 }
