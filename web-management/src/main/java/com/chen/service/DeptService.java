@@ -1,5 +1,6 @@
 package com.chen.service;
 
+import com.chen.exception.DeptException;
 import com.chen.pojo.Dept;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface DeptService {
     /**
      * 按id删除部门
      */
-    void deleteById(Integer id);
+    void deleteById(Integer id) throws DeptException;
 
     /**
      * 添加部门

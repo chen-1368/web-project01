@@ -3,6 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chen.mapper.ClazzMapper">
+    <update id="update">
+        update clazz
+        <set>
+            name = #{name}, room = #{room}, begin_date = #{beginDate}, end_date = #{endDate},
+            master_id = #{masterId}, update_time = #{updateTime},
+            <if test="subject != null">
+                subject = #{subject}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
     <select id="list" resultType="com.chen.pojo.Clazz">
         select * from clazz c
         <where>
@@ -16,15 +27,7 @@
         order by update_time desc
     </select>
     <insert id="add">
-        insert into clazz(name, room, begin_date, end_date,
-                          <if test="masterId != null">
-                              master_id,
-                          </if>
-                          subject, create_time, update_time)
-        values (#{name},#{room},#{beginDate},#{endDate},
-                <if test="masterId != null">
-                    #{masterId},
-                </if>
-                #{subject},#{createTime},#{updateTime})
+        insert into clazz(name, room, begin_date, end_date,master_id,subject, create_time, update_time)
+        values (#{name},#{room},#{beginDate},#{endDate},#{masterId},#{subject},#{createTime},#{updateTime})
     </insert>
 </mapper>

@@ -1,5 +1,6 @@
 package com.chen.controller;
 
+import com.chen.exception.DeptException;
 import com.chen.pojo.Dept;
 import com.chen.pojo.Result;
 import com.chen.service.DeptService;
@@ -23,7 +24,7 @@ public class DeptController {
     }
 
     @DeleteMapping
-    public Result delete(Integer id){
+    public Result delete(Integer id) throws DeptException {
         log.info("根据id删除数据，id为：{}",id);
         deptService.deleteById(id);
         return Result.success();

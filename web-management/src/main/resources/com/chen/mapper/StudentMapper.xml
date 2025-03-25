@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chen.mapper.StudentMapper">
+    <insert id="insert">
+        INSERT INTO student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            name, no, gender, phone,
+            id_card, is_college,
+            <if test="address != null and address != ''">address,</if>
+            degree,
+            <if test="graduationDate != null">graduation_date,</if>
+            clazz_id,
+            create_time, update_time
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{name}, #{no}, #{gender}, #{phone},
+            #{idCard}, #{isCollege},
+            <if test="address != null and address != ''">#{address},</if>
+            #{degree},
+            <if test="graduationDate != null">#{graduationDate},</if>
+            #{clazzId},
+            #{createTime}, #{updateTime}
+        </trim>
+    </insert>
+    <update id="update">
+        update student
+        <set>
+            name = #{name},
+            no = #{no},
+            gender = #{gender},
+            phone = #{phone},
+            id_card = #{idCard},
+            is_college = #{isCollege},
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            degree = #{degree},
+            <if test="graduationDate != null">
+                graduation_date = #{graduationDate},
+            </if>
+            clazz_id = #{clazzId},
+            violation_count = #{violationCount},
+            violation_score = #{violationScore},
+            update_time = #{updateTime}
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="deleteBatch">
+        delete from student where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="page" resultType="com.chen.pojo.Student">
+        select s.*,c.name clazzName
+        from student s left join clazz c on c.id = s.clazz_id
+        <where>
+            <if test="name != null and name != ''">
+                s.name like concat('%',#{name},'%')
+            </if>
+            <if test="degree != null">
+                and s.degree = #{degree}
+            </if>
+            <if test="clazzId != null">
+                and s.clazz_id = #{clazzId}
+            </if>
+        </where>
+        order by s.update_time
+    </select>
+    <select id="getStudentCountData" resultType="java.util.Map">
+        select c.name cls, count(*) num
+        from student s left join clazz c on c.id = s.clazz_id
+        group by s.clazz_id
+    </select>
+</mapper>
