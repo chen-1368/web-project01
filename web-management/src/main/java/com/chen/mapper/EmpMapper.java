@@ -2,9 +2,12 @@ package com.chen.mapper;
 
 import com.chen.pojo.Emp;
 import com.chen.pojo.EmpQueryParam;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Options;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 员工信息
@@ -12,13 +15,42 @@ import java.util.List;
 @Mapper
 public interface EmpMapper {
     /**
-     * 查询总记录数
+     * 查询员工信息和部门名称
      */
-    @Select("select count(*) from emp e left join dept d on d.id = e.dept_id")
-    public Long count();
+    List<Emp> list(EmpQueryParam empQueryParam);
 
     /**
-     * 查询一页员工信息和部门名称
+     * 新增员工
      */
-    public List<Emp> list(EmpQueryParam empQueryParam);
+    @Options(useGeneratedKeys = true,keyProperty = "id")
+    @Insert("insert into emp(username, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time) " +
+            "values(#{username},#{name},#{gender},#{phone},#{job},#{salary},#{image},#{entryDate},#{deptId},#{createTime},#{updateTime})")
+    void insert(Emp emp);
+
+    /**
+     * 批量删除员工信息
+     */
+    void deleteByIds(List<Integer> ids);
+
+    /**
+     * 根据id查询员工信息
+     */
+    Emp getById(Integer id);
+
+    /**
+     * 根据id更新员工信息
+     */
+    void updateById(Emp emp);
+
+    /**
+     * 查询职位并统计人数
+     */
+    @MapKey("pos")
+    List<Map<String, Object>> getAllEmpJobCount();
+
+    /**
+     * 统计员工性别人数
+     */
+    @MapKey("name")
+    List<Map<String, Object>> getEmpGenderData();
 }
