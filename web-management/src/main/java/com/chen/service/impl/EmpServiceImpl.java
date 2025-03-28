@@ -2,11 +2,9 @@ package com.chen.service.impl;
 
 import com.chen.mapper.EmpExprMapper;
 import com.chen.mapper.EmpMapper;
-import com.chen.pojo.Emp;
-import com.chen.pojo.EmpExpr;
-import com.chen.pojo.EmpQueryParam;
-import com.chen.pojo.PageResult;
+import com.chen.pojo.*;
 import com.chen.service.EmpService;
+import com.chen.utils.JwtUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -87,5 +86,22 @@ public class EmpServiceImpl implements EmpService {
     @Override
     public List<Emp> getAllEmp() {
         return empMapper.getAllEmp();
+    }
+
+    @Override
+    public LoginInfo login(Emp emp) {
+        //根据用户名秘密查询用户
+        Emp e=empMapper.selectByUsernameAndPassword(emp);
+        //判断是否存在
+        if(e!=null){
+            String token= JwtUtils.generateToken(new HashMap<>() {{
+                put("id", e.getId());
+                put("username", e.getUsername());
+            }});
+            //封装成LoginInfo对象
+            return new LoginInfo(e.getId(),e.getName(),e.getUsername(),token);
+        }
+        //不存在返回null
+        return null;
     }
 }

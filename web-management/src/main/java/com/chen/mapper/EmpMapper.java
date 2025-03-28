@@ -63,4 +63,10 @@ public interface EmpMapper {
      */
     @Select("select * from emp where dept_id = #{deptId}")
     List<Emp> getByDeptId(Integer deptId);
+
+    /**
+     * 根据用户名和密码查询员工
+     */
+    @Select("select id, name, username from emp where username = #{username} and password = #{password}")
+    Emp selectByUsernameAndPassword(Emp emp);
 }

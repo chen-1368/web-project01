@@ -2,6 +2,7 @@ package com.chen.service;
 
 import com.chen.pojo.Emp;
 import com.chen.pojo.EmpQueryParam;
+import com.chen.pojo.LoginInfo;
 import com.chen.pojo.PageResult;
 
 import java.util.List;
@@ -36,4 +37,9 @@ public interface EmpService {
      * 查询所有员工
      */
     List<Emp> getAllEmp();
+
+    /**
+     * 登录
+     */
+    LoginInfo login(Emp emp);
 }

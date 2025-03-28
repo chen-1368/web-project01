@@ -6,7 +6,6 @@ import com.chen.mapper.StudentMapper;
 import com.chen.pojo.Clazz;
 import com.chen.pojo.ClazzQueryParam;
 import com.chen.pojo.PageResult;
-import com.chen.pojo.Student;
 import com.chen.service.ClazzService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
