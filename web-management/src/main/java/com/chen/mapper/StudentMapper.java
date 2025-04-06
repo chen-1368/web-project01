@@ -2,7 +2,6 @@ package com.chen.mapper;
 
 import com.chen.pojo.Student;
 import com.chen.pojo.StudentQueryParam;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

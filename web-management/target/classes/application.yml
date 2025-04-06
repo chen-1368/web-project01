@@ -7,6 +7,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
+  servlet:
+    multipart:
+      # 单个文件大小上限
+      max-file-size: 3MB
+      # 单次请求的全部文件大小上限（包括文件以及表单数据）
+      max-request-size: 3MB
 
 #Mybatis的相关配置,让日志输出
 mybatis:
